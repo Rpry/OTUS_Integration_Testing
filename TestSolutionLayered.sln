@@ -33,9 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentRegistrar", "ComponentRegistrar\ComponentRegistrar.csproj", "{831911C0-C619-417E-BFCA-4F34E4F8C8B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Integration", "WebApi.Integration\WebApi.Integration.csproj", "{A17F213D-B8EA-4386-84CD-4F4E2E1130C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Integration.WAF", "WebApi.Integration.WAF\WebApi.Integration.WAF.csproj", "{A17F213D-B8EA-4386-84CD-4F4E2E1130C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Integration.SpecFlow", "WebApi.Integration.SpecFlow\WebApi.Integration.SpecFlow.csproj", "{2C2A601C-DCCA-47F6-92D7-47205EA92E86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Integration", "WebApi.Integration\WebApi.Integration.csproj", "{7447C3A7-1CA4-4396-9467-BB788528067E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{2C2A601C-DCCA-47F6-92D7-47205EA92E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C2A601C-DCCA-47F6-92D7-47205EA92E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C2A601C-DCCA-47F6-92D7-47205EA92E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7447C3A7-1CA4-4396-9467-BB788528067E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7447C3A7-1CA4-4396-9467-BB788528067E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7447C3A7-1CA4-4396-9467-BB788528067E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7447C3A7-1CA4-4396-9467-BB788528067E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
