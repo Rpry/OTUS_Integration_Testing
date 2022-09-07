@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BLL\BusinessLogic.Services.Implementations\BusinessLogic.Services.Implementations.csproj" />
+      <ProjectReference Include="..\DAL\DataAccess.Repositories.Abstractions\DataAccess.Repositories.Abstractions.csproj" />
+      <ProjectReference Include="..\DAL\DataAccess.Repositories.Implementations\DataAccess.Repositories.Implementations.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+    </ItemGroup>
+
+</Project>
