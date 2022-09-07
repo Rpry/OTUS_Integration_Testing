@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -31,10 +33,12 @@ namespace WebApi.Integration.WebHost.Controllers
                 Price = (new Random()).Next(int.MaxValue)
             };
             var addCourseResponse = await client.PostAsJsonAsync("/course", request);
-            var actual = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
+            // var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            // var addCourseResponse = await client.PostAsync("/course", content);
+            var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
-            var getCourseResponse = await client.GetAsync($"/course/{actual}");
+            var getCourseResponse = await client.GetAsync($"/course/{courseId}");
             
             //Assert
             addCourseResponse.IsSuccessStatusCode.Should().BeTrue();

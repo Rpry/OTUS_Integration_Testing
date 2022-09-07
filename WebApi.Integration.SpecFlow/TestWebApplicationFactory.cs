@@ -50,7 +50,7 @@ namespace WebApi.Integration.SpecFlow
             });
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             new EfTestDbInitializer(ServiceProvider.GetRequiredService<DatabaseContext>()).CleanDb();
         }

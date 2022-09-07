@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -19,7 +20,7 @@ namespace WebApi.Integration.Controllers
         }
         
         [Fact]
-        public async Task CreateCourse_ShouldCreateCourse()
+        public async Task CreateCourse_ShouldCreateNewCourse()
         {
             //Arrange 
             var request = new CourseModel
@@ -28,10 +29,10 @@ namespace WebApi.Integration.Controllers
                 Price = (new Random()).Next(int.MaxValue)
             };
             var addCourseResponse = await _httpClient.PostAsJsonAsync($"{baseUri}/course", request);
-            var actual = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
+            var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
-            var getCourseResponse = await _httpClient.GetAsync($"{baseUri}/course/{actual}");
+            var getCourseResponse = await _httpClient.GetAsync($"{baseUri}/course/{courseId}");
             
             //Assert
             addCourseResponse.IsSuccessStatusCode.Should().BeTrue();
