@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -12,8 +10,7 @@ using Xunit;
 
 namespace WebApi.Integration.WebHost.Controllers
 {
-    public class CourseControllerTests
-        : IClassFixture<TestWebApplicationFactory<Startup>>
+    public class CourseControllerTests : IClassFixture<TestWebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
         
@@ -23,16 +20,16 @@ namespace WebApi.Integration.WebHost.Controllers
         }
         
         [Fact]
-        public async Task CreateCourse_ShouldCreateCourse()
+        public async Task CourseShouldBeCreatedSuccessfully()
         {
             //Arrange 
             var client = _factory.CreateClient();
-            var request = new CourseModel
+            var initialCourseModel = new CourseModel
             {
                 Name = "course_name",
                 Price = (new Random()).Next(int.MaxValue)
             };
-            var addCourseResponse = await client.PostAsJsonAsync("/course", request);
+            var addCourseResponse = await client.PostAsJsonAsync("/course", initialCourseModel);
             // var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
             // var addCourseResponse = await client.PostAsync("/course", content);
             var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
@@ -45,8 +42,8 @@ namespace WebApi.Integration.WebHost.Controllers
             addCourseResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var courseModel = JsonConvert.DeserializeObject<CourseModel>(await getCourseResponse.Content.ReadAsStringAsync());
             courseModel.Should().NotBeNull();
-            courseModel.Name.Should().Be(request.Name);
-            courseModel.Price.Should().Be(request.Price);
+            courseModel.Name.Should().Be(initialCourseModel.Name);
+            courseModel.Price.Should().Be(initialCourseModel.Price);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace WebApi.Integration.Controllers
 {
     public class CourseControllerTests
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private string baseUri = "http://localhost:5000";
         public CourseControllerTests()
         {
@@ -20,15 +20,15 @@ namespace WebApi.Integration.Controllers
         }
         
         [Fact]
-        public async Task CreateCourse_ShouldCreateNewCourse()
+        public async Task CourseShouldBeCreatedSuccessfully()
         {
             //Arrange 
-            var request = new CourseModel
+            var initialCourseModel = new CourseModel
             {
                 Name = "course_name",
                 Price = (new Random()).Next(int.MaxValue)
             };
-            var addCourseResponse = await _httpClient.PostAsJsonAsync($"{baseUri}/course", request);
+            var addCourseResponse = await _httpClient.PostAsJsonAsync($"{baseUri}/course", initialCourseModel);
             var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
@@ -39,8 +39,8 @@ namespace WebApi.Integration.Controllers
             addCourseResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var courseModel = JsonConvert.DeserializeObject<CourseModel>(await getCourseResponse.Content.ReadAsStringAsync());
             courseModel.Should().NotBeNull();
-            courseModel.Name.Should().Be(request.Name);
-            courseModel.Price.Should().Be(request.Price);
+            courseModel.Name.Should().Be(initialCourseModel.Name);
+            courseModel.Price.Should().Be(initialCourseModel.Price);
         }
     }
 }
