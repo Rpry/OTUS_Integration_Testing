@@ -63,5 +63,11 @@ namespace WebApi.Integration.SpecFlow.Steps
             courseModel.Name.Should().Be(initialCourseModel.Name);
             courseModel.Price.Should().Be(initialCourseModel.Price);
         }
+
+        [Given(@"new lesson is created")]
+        public void GivenNewLessonIsCreated()
+        {
+            ScenarioContext.StepIsPending();
+        }
     }
 }

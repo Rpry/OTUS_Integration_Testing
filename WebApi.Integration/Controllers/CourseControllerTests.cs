@@ -10,13 +10,16 @@ using Xunit;
 
 namespace WebApi.Integration.Controllers
 {
-    public class CourseControllerTests
+    public class CourseControllerTests : IClassFixture<TestFixture>
     {
         private readonly HttpClient _httpClient;
-        private string baseUri = "http://localhost:5000";
-        public CourseControllerTests()
+        private readonly string _baseUri;
+        
+        public CourseControllerTests(TestFixture testFixture)
         {
             _httpClient = new HttpClient();
+            var configuration = testFixture.Configuration;
+            _baseUri = configuration["BaseUri"];
         }
         
         [Fact]
@@ -28,11 +31,11 @@ namespace WebApi.Integration.Controllers
                 Name = "course_name",
                 Price = (new Random()).Next(int.MaxValue)
             };
-            var addCourseResponse = await _httpClient.PostAsJsonAsync($"{baseUri}/course", initialCourseModel);
+            var addCourseResponse = await _httpClient.PostAsJsonAsync($"{_baseUri}/course", initialCourseModel);
             var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
-            var getCourseResponse = await _httpClient.GetAsync($"{baseUri}/course/{courseId}");
+            var getCourseResponse = await _httpClient.GetAsync($"{_baseUri}/course/{courseId}");
             
             //Assert
             addCourseResponse.IsSuccessStatusCode.Should().BeTrue();

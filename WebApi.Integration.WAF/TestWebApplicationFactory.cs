@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using WebApi.Integration.Data;
 
 namespace WebApi.Integration
 {
@@ -29,30 +27,11 @@ namespace WebApi.Integration
                 {
                     options.UseInMemoryDatabase("InMemoryReviewProtocolSagaContext", builder => { });
                 }, ServiceLifetime.Transient);
-
-                var sp = services.BuildServiceProvider();
-                ServiceProvider = sp;
-                using var scope = sp.CreateScope();
-                var scopedServices = scope.ServiceProvider;
-                var dbContext = scopedServices.GetRequiredService<DatabaseContext>();
-                var logger = scopedServices
-                    .GetRequiredService<ILogger<TestWebApplicationFactory<TStartup>>>();
-
-                try
-                {
-                    new EfTestDbInitializer(dbContext).InitializeDb();
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "Проблема во время заполнения тестовой базы. " +
-                                        "Ошибка: {Message}", ex.Message);
-                }
             });
         }
 
         public new void Dispose()
         {
-            new EfTestDbInitializer(ServiceProvider.GetRequiredService<DatabaseContext>()).CleanDb();
         }
     }
 }

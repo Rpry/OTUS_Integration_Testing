@@ -30,8 +30,6 @@ namespace WebApi.Integration.WebHost.Controllers
                 Price = (new Random()).Next(int.MaxValue)
             };
             var addCourseResponse = await client.PostAsJsonAsync("/course", initialCourseModel);
-            // var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-            // var addCourseResponse = await client.PostAsync("/course", content);
             var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
