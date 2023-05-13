@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{2A3133E6-228D-4B81-BDD4-F84FFE3D416D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{B6AF590D-9EB5-4FA9-9FAC-14562F9C4DA7}"
+	ProjectSection(SolutionItems) = preProject
+		DAL\LocalDatabase.db = DAL\LocalDatabase.db
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.EntityFramework", "DAL\DataAccess.Context\DataAccess.EntityFramework.csproj", "{B59C2C29-0151-41C5-980C-C6274C3BE79F}"
 EndProject
