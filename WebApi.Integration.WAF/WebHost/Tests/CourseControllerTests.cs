@@ -1,41 +1,39 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using WebApi.Models;
 using Xunit;
 
-namespace WebApi.Integration.Controllers
+namespace WebApi.Integration.WebHost.Tests
 {
-    public class CourseControllerTests : IClassFixture<TestFixture>
+    public class CourseControllerTests : IClassFixture<TestWebApplicationFactory<Startup>>
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _baseUri;
+        private readonly WebApplicationFactory<Startup> _factory;
         
-        public CourseControllerTests(TestFixture testFixture)
+        public CourseControllerTests(TestWebApplicationFactory<Startup> factory)
         {
-            _httpClient = new HttpClient();
-            var configuration = testFixture.Configuration;
-            _baseUri = configuration["BaseUri"];
+            _factory = factory;
         }
         
         [Fact]
         public async Task CourseShouldBeCreatedSuccessfully()
         {
             //Arrange 
+            var client = _factory.CreateClient();
             var initialCourseModel = new CourseModel
             {
                 Name = "course_name",
                 Price = (new Random()).Next(int.MaxValue)
             };
-            var addCourseResponse = await _httpClient.PostAsJsonAsync($"{_baseUri}/course", initialCourseModel);
+            var addCourseResponse = await client.PostAsJsonAsync("/course", initialCourseModel);
             var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
             
             //Act
-            var getCourseResponse = await _httpClient.GetAsync($"{_baseUri}/course/{courseId}");
+            var getCourseResponse = await client.GetAsync($"/course/{courseId}");
             
             //Assert
             addCourseResponse.IsSuccessStatusCode.Should().BeTrue();

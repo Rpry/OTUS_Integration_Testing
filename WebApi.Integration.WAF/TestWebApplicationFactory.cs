@@ -11,8 +11,6 @@ namespace WebApi.Integration
     public class TestWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup>, IDisposable where TStartup : class
     {
-        private IServiceProvider ServiceProvider { get; set; }
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>

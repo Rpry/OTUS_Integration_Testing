@@ -47,7 +47,6 @@ namespace WebApi.Integration.SpecFlow.Steps
         {
             var getCourseResponse = await _httpClient.GetAsync($"/course/{_scenarioContext["courseId"]}");
             _scenarioContext["getCourseResponse"] = getCourseResponse;
-
         }
 
         [Then(@"the course should be found")]
