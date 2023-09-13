@@ -37,12 +37,12 @@ namespace WebApi.Integration.SpecFlow.Steps
                 Price = (new Random()).Next(int.MaxValue)
             };
             var addCourseResponse = await _httpClient.PostAsJsonAsync("/course", courseModel);
-            var actual = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
-            _scenarioContext["courseId"] = actual;
+            var courseId = JsonConvert.DeserializeObject<int>(await addCourseResponse.Content.ReadAsStringAsync());
+            _scenarioContext["courseId"] = courseId;
             _scenarioContext["courseModel"] = courseModel;
         }
 
-        [When(@"the course is being searched")]
+        [When(@"the course is requested")]
         public async Task WhenTheCourseIsBeingSearched()
         {
             var getCourseResponse = await _httpClient.GetAsync($"/course/{_scenarioContext["courseId"]}");
@@ -52,11 +52,10 @@ namespace WebApi.Integration.SpecFlow.Steps
         [Then(@"the course should be found")]
         public async Task ThenTheCourseShouldBeFound()
         {
-            var addCourseResponse = _scenarioContext["getCourseResponse"] as HttpResponseMessage;
             var getCourseResponse = _scenarioContext["getCourseResponse"] as HttpResponseMessage;
             var initialCourseModel = _scenarioContext["courseModel"] as CourseModel;
-            addCourseResponse.IsSuccessStatusCode.Should().BeTrue();
-            addCourseResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            getCourseResponse.IsSuccessStatusCode.Should().BeTrue();
+            getCourseResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var courseModel = JsonConvert.DeserializeObject<CourseModel>(await getCourseResponse.Content.ReadAsStringAsync());
             courseModel.Should().NotBeNull();
             courseModel.Name.Should().Be(initialCourseModel.Name);

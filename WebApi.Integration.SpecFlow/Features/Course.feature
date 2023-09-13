@@ -4,5 +4,5 @@
 @mytag
 Scenario: Create new course
 	Given new course is created 		
-	When the course is being searched
+	When the course is requested
 	Then the course should be found

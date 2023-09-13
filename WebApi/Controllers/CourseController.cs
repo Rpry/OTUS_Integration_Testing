@@ -25,9 +25,16 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
-            return Ok(_mapper.Map<CourseModel>(await _service.GetById(id)));
+            return Ok(_mapper.Map<CourseModel>(await _service.GetByIdAsync(id)));
+        }
+
+
+        [HttpGet("sync/{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_mapper.Map<CourseModel>(_service.GetById(id)));
         }
 
         [HttpPost]

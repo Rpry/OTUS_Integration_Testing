@@ -22,7 +22,14 @@ namespace BusinessLogic.Abstractions
         /// </summary>
         /// <param name="id">идентификатор</param>
         /// <returns>ДТО курса</returns>
-        Task<CourseDto> GetById(int id);
+        Task<CourseDto> GetByIdAsync(int id);
+
+        /// <summary>
+        /// Получить
+        /// </summary>
+        /// <param name="id">идентификатор</param>
+        /// <returns>ДТО курса</returns>
+        CourseDto GetById(int id);
 
         /// <summary>
         /// Создать
