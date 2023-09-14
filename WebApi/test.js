@@ -2,8 +2,8 @@
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 100,
-    duration: '10s',
+    vus: 1000,
+    duration: '2s',
 };
 export default function () {
     const res = http.get('http://localhost:5200/Course/1');
